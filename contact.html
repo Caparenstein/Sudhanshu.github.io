@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Transmission — Sudhanshu Nirala (RENSTEIN)</title>
+  <meta name="description" content="Get in touch with Sudhanshu Nirala (RENSTEIN) for robotics research, control systems development, hardware collaboration, or consulting.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="minimal-theme">
+
+  <!-- ==================== MAIN NAVIGATION BAR ==================== -->
+  <header class="main-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-accent">RENSTEIN</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-sub">SUDHANSHU NIRALA</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link">About Me</a>
+        <a href="projects.html" class="nav-link">My Projects</a>
+        <a href="simulator.html" class="nav-link">Interactive Lab</a>
+        <a href="youtube.html" class="nav-link">YouTube & Builds</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="living-status-pill" title="Living website telemetry">
+          <span class="living-pulse-dot"></span>
+          <span>COMMS://READY</span>
+        </div>
+        <a href="contact.html" class="btn btn-primary-sm">
+          <span>Get in Touch</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ambient Light Reactive Canvas -->
+  <div class="background-canvas-wrapper">
+    <canvas id="neuralCanvas"></canvas>
+    <div class="bg-subtle-grid"></div>
+  </div>
+
+  <main>
+    <!-- ==================== DEDICATED PAGE HERO ==================== -->
+    <header class="page-hero">
+      <div class="page-hero-container">
+        <div class="page-kicker">
+          <span>DEDICATED PAGE // 05</span>
+          <span>•</span>
+          <span>DIRECT TRANSMISSION</span>
+        </div>
+        <h1 class="page-title">Connect With Me</h1>
+        <p class="page-desc">
+          I am always open to discussing new robotics hardware projects, control systems research, collaboration opportunities, or technical inquiries. Send me a direct message or connect through my social links.
+        </p>
+      </div>
+    </header>
+
+    <!-- ==================== CONTACT CHANNELS & FORM ==================== -->
+    <section class="section" style="padding-top: 3.5rem;">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Left Column: My Direct Channels -->
+          <div class="contact-info-card">
+            <h3 class="cic-name">Sudhanshu Nirala</h3>
+            <p class="cic-role">Robotics & Mechatronics Engineer // Codename: RENSTEIN</p>
+            <p class="cic-intro">
+              Whether you want to discuss my 5-DOF arm kinematics, active vision turrets, swarm algorithms, LQR balancing dynamics, or suggest an experiment for my YouTube channel, feel free to reach out directly.
+            </p>
+
+            <div class="contact-links">
+              <!-- Email -->
+              <div class="contact-link-row">
+                <span class="clr-label">Email:</span>
+                <a href="mailto:niralasudhanshu03@gmail.com" class="clr-val" id="emailLink">niralasudhanshu03@gmail.com</a>
+                <button class="btn-copy" id="copyEmailBtn">Copy</button>
+              </div>
+
+              <!-- YouTube -->
+              <div class="contact-link-row">
+                <span class="clr-label">YouTube:</span>
+                <a href="https://www.youtube.com/@projectRenstein" target="_blank" rel="noopener" class="clr-val">youtube.com/@projectRenstein</a>
+              </div>
+
+              <!-- LinkedIn -->
+              <div class="contact-link-row">
+                <span class="clr-label">LinkedIn:</span>
+                <a href="https://www.linkedin.com/in/nirala-sudhanshu-/" target="_blank" rel="noopener" class="clr-val">linkedin.com/in/nirala-sudhanshu-</a>
+              </div>
+
+              <!-- GitHub -->
+              <div class="contact-link-row">
+                <span class="clr-label">GitHub:</span>
+                <a href="https://github.com/Caparenstein" target="_blank" rel="noopener" class="clr-val">github.com/Caparenstein</a>
+              </div>
+            </div>
+
+            <div class="contact-status-box">
+              <span class="cs-dot"></span>
+              <span>Available for robotics development & research collaborations</span>
+            </div>
+          </div>
+
+          <!-- Right Column: Direct Message Form -->
+          <div class="contact-form-card">
+            <h3 class="cfc-title">Send Me a Message</h3>
+            <form class="clean-form" id="uplinkForm">
+              <div class="form-group">
+                <label for="senderName">Your Name / Organization *</label>
+                <input type="text" id="senderName" name="name" required placeholder="e.g. Alex Chen / Hardware Lab" autocomplete="name">
+              </div>
+
+              <div class="form-group">
+                <label for="senderEmail">Your Email *</label>
+                <input type="email" id="senderEmail" name="email" required placeholder="name@domain.com" autocomplete="email">
+              </div>
+
+              <div class="form-group">
+                <label for="subjectSelect">Topic / Project *</label>
+                <select id="subjectSelect" name="subject" required>
+                  <option value="" disabled selected>Select a topic...</option>
+                  <option value="arm_manipulator">5-DOF Robotic Arm & ADRC/Fuzzy Control</option>
+                  <option value="camera_turret">Face-Tracking Camera Turret Systems</option>
+                  <option value="swarm_robotics">Swarm Robotics & Multi-Agent Consensus</option>
+                  <option value="balance_bot">Variable-Height Self-Balancing Robot</option>
+                  <option value="youtube_experiment">YouTube Build Idea / Collaboration</option>
+                  <option value="collaboration">General Robotics Collaboration / Hiring</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="senderMessage">Message *</label>
+                <textarea id="senderMessage" name="message" rows="5" required placeholder="Tell me about your project, idea, or questions..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full" id="submitTransmissionBtn">
+                <span>Send Message to Sudhanshu</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+
+              <div class="form-status-msg" id="formStatusMsg"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MINIMALIST FOOTER ==================== -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="f-brand">RENSTEIN</div>
+        <div class="f-sub">Sudhanshu Nirala — Roboticist & Control Systems Engineer</div>
+        <div class="f-copyright">&copy; <span id="currentYear">2026</span> Sudhanshu Nirala. All rights reserved.</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://www.youtube.com/@projectRenstein" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://github.com/Caparenstein" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/nirala-sudhanshu-/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:niralasudhanshu03@gmail.com">Email</a>
+        <button class="btn-top" id="backToTopBtn" aria-label="Back to top">
+          <span>Top</span> ↑
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Robotics Projects — Sudhanshu Nirala (RENSTEIN)</title>
+  <meta name="description" content="Technical breakdowns of robotics systems designed and built by Sudhanshu Nirala (RENSTEIN): 5-DOF Robotic Arm, Face-Tracking Turret, 4-Robot Swarm, and LQR Balancing Bot.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="minimal-theme">
+
+  <!-- ==================== MAIN NAVIGATION BAR ==================== -->
+  <header class="main-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-accent">RENSTEIN</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-sub">SUDHANSHU NIRALA</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link">About Me</a>
+        <a href="projects.html" class="nav-link active">My Projects</a>
+        <a href="simulator.html" class="nav-link">Interactive Lab</a>
+        <a href="youtube.html" class="nav-link">YouTube & Builds</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="living-status-pill" title="Living website telemetry">
+          <span class="living-pulse-dot"></span>
+          <span>CORE://ONLINE</span>
+        </div>
+        <a href="contact.html" class="btn btn-primary-sm">
+          <span>Get in Touch</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ambient Light Reactive Canvas -->
+  <div class="background-canvas-wrapper">
+    <canvas id="neuralCanvas"></canvas>
+    <div class="bg-subtle-grid"></div>
+  </div>
+
+  <main>
+    <!-- ==================== DEDICATED PAGE HERO ==================== -->
+    <header class="page-hero">
+      <div class="page-hero-container">
+        <div class="page-kicker">
+          <span>DEDICATED PAGE // 02</span>
+          <span>•</span>
+          <span>HARDWARE & CONTROLS</span>
+        </div>
+        <h1 class="page-title">My Robotics Hardware & Systems</h1>
+        <p class="page-desc">
+          Every system below is a physical robot I designed, modeled, wired, and calibrated. I focus on combining mechanical design with mathematical control theory — utilizing classical PID, modern ADRC with Extended State Observers, Fuzzy Logic, and LQR optimal control.
+        </p>
+      </div>
+    </header>
+
+    <!-- ==================== FLAGSHIP PROJECTS GRID ==================== -->
+    <section class="section" style="padding-top: 3.5rem;">
+      <div class="container">
+        <div class="projects-grid">
+          <!-- Project 01: 5-DOF Robotic Arm + Gripper -->
+          <article class="project-card">
+            <div class="project-schematic-header">
+              <span class="psh-label">MY KINEMATIC SCHEMATIC // 5-DOF MANIPULATOR</span>
+              <span class="psh-badge">PID • ADRC • FUZZY</span>
+            </div>
+
+            <!-- Vector Schematic -->
+            <div class="schematic-viewport">
+              <svg viewBox="0 0 520 280" class="schematic-svg" aria-label="5-DOF Arm Kinematic Diagram">
+                <defs>
+                  <pattern id="gridPattern1" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <line x1="0" y1="0" x2="20" y2="0" stroke="#f1f5f9" stroke-width="1"/>
+                    <line x1="0" y1="0" x2="0" y2="20" stroke="#f1f5f9" stroke-width="1"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="#ffffff"/>
+                <rect width="100%" height="100%" fill="url(#gridPattern1)"/>
+
+                <!-- Ground / Mounting Base -->
+                <line x1="40" y1="245" x2="480" y2="245" stroke="#cbd5e1" stroke-width="2"/>
+                <rect x="150" y="235" width="80" height="10" rx="2" fill="#0f172a"/>
+                <ellipse cx="190" cy="235" rx="35" ry="6" fill="#ff6200" opacity="0.3"/>
+                <circle cx="190" cy="235" r="5" fill="#ff6200"/>
+                <text x="190" y="260" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748b" text-anchor="middle">J1: Base Yaw (θ₁)</text>
+
+                <!-- Shoulder Link (L1) -->
+                <line x1="190" y1="235" x2="190" y2="155" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
+                <circle cx="190" cy="155" r="7" fill="#ff6200" stroke="#0f172a" stroke-width="2"/>
+                <text x="135" y="195" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748b">L₁ = 180mm</text>
+                <text x="135" y="150" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0f172a" font-weight="bold">J2: Shoulder (θ₂)</text>
+
+                <!-- Elbow Link (L2) -->
+                <line x1="190" y1="155" x2="310" y2="95" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="310" cy="95" r="6" fill="#ff6200" stroke="#0f172a" stroke-width="2"/>
+                <text x="250" y="115" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748b">L₂ = 160mm</text>
+                <text x="310" y="78" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0f172a" font-weight="bold" text-anchor="middle">J3: Elbow (θ₃)</text>
+
+                <!-- Wrist Link (L3) & Wrist Twist -->
+                <line x1="310" y1="95" x2="390" y2="80" stroke="#ff6200" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="390" cy="80" r="5" fill="#ffffff" stroke="#ff6200" stroke-width="2.5"/>
+                <text x="390" y="65" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748b" text-anchor="middle">J4: Wrist Pitch (θ₄)</text>
+                <path d="M 405 70 A 10 10 0 1 1 405 90" fill="none" stroke="#ff6200" stroke-width="1.5" stroke-dasharray="2,2"/>
+                <text x="425" y="65" font-family="'JetBrains Mono', monospace" font-size="9" fill="#ff6200">J5: Twist (θ₅)</text>
+
+                <!-- Parallel Gripper Jaws -->
+                <line x1="390" y1="80" x2="435" y2="72" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="390" y1="80" x2="435" y2="88" stroke="#0f172a" stroke-width="2.5"/>
+                <rect x="435" y="68" width="14" height="6" rx="1" fill="#ff6200"/>
+                <rect x="435" y="86" width="14" height="6" rx="1" fill="#ff6200"/>
+                <text x="460" y="83" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0f172a" font-weight="bold">Gripper</text>
+
+                <!-- Coordinate Indicator -->
+                <g transform="translate(60, 60)">
+                  <line x1="0" y1="0" x2="35" y2="0" stroke="#ff6200" stroke-width="1.5"/>
+                  <line x1="0" y1="0" x2="0" y2="-35" stroke="#0f172a" stroke-width="1.5"/>
+                  <text x="40" y="4" font-family="'JetBrains Mono', monospace" font-size="9" fill="#ff6200">X₀</text>
+                  <text x="-4" y="-40" font-family="'JetBrains Mono', monospace" font-size="9" fill="#0f172a">Z₀</text>
+                  <circle cx="0" cy="0" r="3" fill="#0f172a"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="project-body">
+              <h3 class="project-title">My 5-DOF Robotic Arm & Precision Gripper</h3>
+              <p class="project-desc">
+                I engineered this articulated mechanical manipulator with 5 full degrees of freedom: <strong>Base Yaw (&theta;1)</strong>, <strong>Shoulder Pitch (&theta;2)</strong>, <strong>Elbow Pitch (&theta;3)</strong>, <strong>Wrist Pitch (&theta;4)</strong>, <strong>Wrist Roll/Twist (&theta;5)</strong>, and an active parallel grabbing mechanism. I programmed a hybrid control architecture combining classical <strong>PID</strong> for fast tracking, <strong>ADRC (Active Disturbance Rejection Control)</strong> to estimate and cancel joint friction and varying payload masses using an Extended State Observer (ESO), and <strong>Fuzzy Logic</strong> for adaptive gain scheduling.
+              </p>
+              <div class="project-tags">
+                <span class="chip">5-DOF Kinematic Chain</span>
+                <span class="chip">Parallel Gripper Jaws</span>
+                <span class="chip">ADRC Observer (ESO)</span>
+                <span class="chip">Fuzzy Gain Scheduler</span>
+                <span class="chip">PID Servo Tracking</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn-inspect" data-modal="modalArm5Dof">
+                  <span>View My Lab Telemetry & Specs</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 17l9.2-9.2M17 17V7H7" stroke-width="2"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 02: Active Face-Tracking Camera Turret -->
+          <article class="project-card">
+            <div class="project-schematic-header">
+              <span class="psh-label">MY GIMBAL SCHEMATIC // 2-AXIS VISION TURRET</span>
+              <span class="psh-badge">PID CLOSED-LOOP</span>
+            </div>
+
+            <div class="schematic-viewport">
+              <svg viewBox="0 0 520 280" class="schematic-svg" aria-label="Camera Turret Technical Diagram">
+                <rect width="100%" height="100%" fill="#ffffff"/>
+                <rect width="100%" height="100%" fill="url(#gridPattern1)"/>
+
+                <!-- Base Turntable Axis (Azimuth / Pan) -->
+                <ellipse cx="260" cy="230" rx="90" ry="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+                <rect x="225" y="195" width="70" height="35" rx="3" fill="#0f172a"/>
+                <path d="M 190 230 A 70 12 0 0 1 330 230" fill="none" stroke="#ff6200" stroke-width="2" stroke-dasharray="3,3"/>
+                <text x="260" y="258" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748b" text-anchor="middle">Azimuth (Pan: ψ = -90° to +90°)</text>
+
+                <!-- Dual Servo Yoke Brackets -->
+                <path d="M 215 210 L 215 130 L 230 130 L 230 210 Z" fill="#1e293b"/>
+                <path d="M 290 210 L 290 130 L 305 130 L 305 210 Z" fill="#1e293b"/>
+                <circle cx="222" cy="138" r="6" fill="#ff6200"/>
+                <circle cx="298" cy="138" r="6" fill="#ff6200"/>
+                <text x="360" y="142" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0f172a" font-weight="bold">Elevation Axis (Tilt: θ)</text>
+
+                <!-- Camera Barrel & Optical Axis -->
+                <g transform="translate(260, 138) rotate(-6)">
+                  <rect x="-35" y="-24" width="70" height="48" rx="6" fill="#0f172a" stroke="#ff6200" stroke-width="1.5"/>
+                  <circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#ff6200" stroke-width="2"/>
+                  <circle cx="0" cy="0" r="10" fill="#ff6200"/>
+                  <circle cx="0" cy="0" r="4" fill="#ffffff"/>
+
+                  <!-- Collimated Optical Path -->
+                  <line x1="35" y1="0" x2="180" y2="0" stroke="#ff6200" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <circle cx="180" cy="0" r="4" fill="#ff6200"/>
+                  <text x="140" y="-10" font-family="'JetBrains Mono', monospace" font-size="9" fill="#ff6200">Target Axis</text>
+                </g>
+
+                <!-- Feedback Equation Note -->
+                <rect x="30" y="30" width="165" height="50" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+                <text x="40" y="48" font-family="'JetBrains Mono', monospace" font-size="9" fill="#64748b">MY VISION PID LOOP:</text>
+                <text x="40" y="66" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0f172a" font-weight="bold">u[k] = Kp·e + Ki·Σe + Kd·Δe</text>
+              </svg>
+            </div>
+
+            <div class="project-body">
+              <h3 class="project-title">My Active Face-Tracking Camera Turret</h3>
+              <p class="project-desc">
+                I built this high-speed dual-axis Pan-Tilt gimbal system powered by precision metal-gear servos to track targets in real-time. I wrote an active computer-vision pipeline that calculates pixel coordinate errors of detected faces and cursor targets, feeding cross-axis errors into a custom discrete <strong>PID controller</strong>. By tuning anti-windup clamping and derivative damping, I eliminated servo oscillation and achieved fluid, organic tracking.
+              </p>
+              <div class="project-tags">
+                <span class="chip">Pan-Tilt Gimbal</span>
+                <span class="chip">OpenCV Face Detection</span>
+                <span class="chip">Discrete PID Control</span>
+                <span class="chip">Anti-Windup Clamping</span>
+                <span class="chip">Zero-Overshoot Damping</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn-inspect" data-modal="modalTurret">
+                  <span>View My Lab Telemetry & Specs</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 17l9.2-9.2M17 17V7H7" stroke-width="2"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 03: Swarm Robotics (4 Autonomous Robots) -->
+          <article class="project-card">
+            <div class="project-schematic-header">
+              <span class="psh-label">MY TOPOLOGY SCHEMATIC // 4-ROBOT COLLABORATIVE SWARM</span>
+              <span class="psh-badge">CONSENSUS • APF</span>
+            </div>
+
+            <div class="schematic-viewport">
+              <svg viewBox="0 0 520 280" class="schematic-svg" aria-label="4-Robot Swarm Network Diagram">
+                <rect width="100%" height="100%" fill="#ffffff"/>
+                <rect width="100%" height="100%" fill="url(#gridPattern1)"/>
+
+                <!-- Communication Mesh Lines -->
+                <line x1="160" y1="80" x2="360" y2="80" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+                <line x1="160" y1="200" x2="360" y2="200" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+                <line x1="160" y1="80" x2="160" y2="200" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+                <line x1="360" y1="80" x2="360" y2="200" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+                <line x1="160" y1="80" x2="360" y2="200" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="2,2"/>
+                <line x1="360" y1="80" x2="160" y2="200" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="2,2"/>
+
+                <!-- Center Target Convergence Point -->
+                <circle cx="260" cy="140" r="14" fill="none" stroke="#ff6200" stroke-width="1.5" stroke-dasharray="2,2"/>
+                <circle cx="260" cy="140" r="4" fill="#ff6200"/>
+                <text x="260" y="165" font-family="'JetBrains Mono', monospace" font-size="9" fill="#ff6200" text-anchor="middle">Consensus Rendezvous</text>
+
+                <!-- Robot 1 -->
+                <circle cx="160" cy="80" r="24" fill="none" stroke="#ff6200" stroke-width="1" opacity="0.4"/>
+                <rect x="146" y="66" width="28" height="28" rx="5" fill="#0f172a"/>
+                <circle cx="160" cy="80" r="4" fill="#ff6200"/>
+                <text x="160" y="108" font-family="'JetBrains Mono', monospace" font-size="9" fill="#0f172a" font-weight="bold" text-anchor="middle">Robot #1</text>
+
+                <!-- Robot 2 -->
+                <circle cx="360" cy="80" r="24" fill="none" stroke="#ff6200" stroke-width="1" opacity="0.4"/>
+                <rect x="346" y="66" width="28" height="28" rx="5" fill="#0f172a"/>
+                <circle cx="360" cy="80" r="4" fill="#ff6200"/>
+                <text x="360" y="108" font-family="'JetBrains Mono', monospace" font-size="9" fill="#0f172a" font-weight="bold" text-anchor="middle">Robot #2</text>
+
+                <!-- Robot 3 -->
+                <circle cx="160" cy="200" r="24" fill="none" stroke="#ff6200" stroke-width="1" opacity="0.4"/>
+                <rect x="146" y="186" width="28" height="28" rx="5" fill="#0f172a"/>
+                <circle cx="160" cy="200" r="4" fill="#ff6200"/>
+                <text x="160" y="228" font-family="'JetBrains Mono', monospace" font-size="9" fill="#0f172a" font-weight="bold" text-anchor="middle">Robot #3</text>
+
+                <!-- Robot 4 -->
+                <circle cx="360" cy="200" r="24" fill="none" stroke="#ff6200" stroke-width="1" opacity="0.4"/>
+                <rect x="346" y="186" width="28" height="28" rx="5" fill="#0f172a"/>
+                <circle cx="360" cy="200" r="4" fill="#ff6200"/>
+                <text x="360" y="228" font-family="'JetBrains Mono', monospace" font-size="9" fill="#0f172a" font-weight="bold" text-anchor="middle">Robot #4</text>
+
+                <!-- Math Note -->
+                <rect x="30" y="25" width="135" height="40" rx="3" fill="#f8fafc" stroke="#e2e8f0"/>
+                <text x="40" y="42" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#64748b">MY SWARM SIZE:</text>
+                <text x="40" y="56" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0f172a" font-weight="bold">N = 4 Mobile Nodes</text>
+              </svg>
+            </div>
+
+            <div class="project-body">
+              <h3 class="project-title">My Swarm Robotics: 4 Autonomous Collaborative Units</h3>
+              <p class="project-desc">
+                I developed this decentralized multi-agent system consisting of exactly <strong>4 autonomous mobile robots</strong> working in unison. I implemented leader-follower consensus protocols and <strong>Artificial Potential Fields (APF)</strong>: virtual repulsive forces prevent inter-robot collisions while attractive forces guide the robots toward exploration goals. When commanded, all 4 robots immediately compute collision-free vectors and converge to a common coordinate.
+              </p>
+              <div class="project-tags">
+                <span class="chip">4 Swarm Agents</span>
+                <span class="chip">Decentralized Consensus</span>
+                <span class="chip">Artificial Potential Fields</span>
+                <span class="chip">Collision Avoidance</span>
+                <span class="chip">Live Click Convergence</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn-inspect" data-modal="modalSwarm">
+                  <span>View My Lab Telemetry & Specs</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 17l9.2-9.2M17 17V7H7" stroke-width="2"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 04: Variable-Height Self-Balancing Bot with LQR -->
+          <article class="project-card">
+            <div class="project-schematic-header">
+              <span class="psh-label">MY DYNAMICS SCHEMATIC // WHEELED-LEGGED LQR BALANCE</span>
+              <span class="psh-badge">LQR OPTIMAL: u = -Kx</span>
+            </div>
+
+            <div class="schematic-viewport">
+              <svg viewBox="0 0 520 280" class="schematic-svg" aria-label="Self Balancing Bot Inverted Pendulum Schematic">
+                <rect width="100%" height="100%" fill="#ffffff"/>
+                <rect width="100%" height="100%" fill="url(#gridPattern1)"/>
+
+                <!-- Ground Contact Line -->
+                <line x1="40" y1="245" x2="480" y2="245" stroke="#cbd5e1" stroke-width="2"/>
+
+                <!-- Vertical Centerline / Equilibrium Axis -->
+                <line x1="260" y1="35" x2="260" y2="245" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+                <!-- Two-Wheeled Hub Assembly -->
+                <circle cx="260" cy="215" r="28" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5"/>
+                <circle cx="260" cy="215" r="8" fill="#ff6200"/>
+                <text x="260" y="258" font-family="'JetBrains Mono', monospace" font-size="10" fill="#64748b" text-anchor="middle">Motorized Hub Wheels (r_w)</text>
+
+                <!-- Articulated Knee Linkages (Bending) -->
+                <line x1="260" y1="215" x2="235" y2="155" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="235" cy="155" r="6" fill="#ff6200" stroke="#0f172a" stroke-width="2"/>
+                <line x1="235" y1="155" x2="260" y2="95" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="260" cy="95" r="6" fill="#ff6200" stroke="#0f172a" stroke-width="2"/>
+
+                <text x="175" y="158" font-family="'JetBrains Mono', monospace" font-size="9.5" fill="#0f172a" font-weight="bold">Knee Joint (φ)</text>
+
+                <!-- Upper Body / Center of Mass (CoM) -->
+                <rect x="235" y="65" width="50" height="35" rx="5" fill="#0f172a"/>
+                <circle cx="260" cy="82" r="5" fill="#ff6200"/>
+                <text x="315" y="85" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0f172a" font-weight="bold">CoM (m_body)</text>
+
+                <!-- Height Mode Indicator Arrow -->
+                <line x1="390" y1="215" x2="390" y2="82" stroke="#ff6200" stroke-width="1.5" stroke-dasharray="3,2"/>
+                <polygon points="390,75 386,85 394,85" fill="#ff6200"/>
+                <polygon points="390,222 386,212 394,212" fill="#ff6200"/>
+                <text x="405" y="145" font-family="'JetBrains Mono', monospace" font-size="9" fill="#ff6200">h = 35% to 100%</text>
+                <text x="405" y="160" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#64748b">3 Height Modes</text>
+
+                <!-- LQR Formula Box -->
+                <rect x="30" y="30" width="165" height="48" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
+                <text x="40" y="47" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#64748b">MY LQR STATE FEEDBACK:</text>
+                <text x="40" y="65" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0f172a" font-weight="bold">u = -K·[x, ẋ, θ, θ̇]ᵀ</text>
+              </svg>
+            </div>
+
+            <div class="project-body">
+              <h3 class="project-title">My Variable-Height Self-Balancing Bot (LQR)</h3>
+              <p class="project-desc">
+                I engineered this transformable two-wheeled inverted pendulum robot with articulated servo knee linkages. It can crouch low (35%), maintain mid stance (65%), or extend tall (100%) while preserving active upright dynamic balance. To stabilize the bot as the leg linkages shift the center of mass, I implemented <strong>LQR (Linear Quadratic Regulator) Control Theory</strong>, solving the Continuous Algebraic Riccati Equation to continuously recalculate optimal state-feedback gain matrix <strong>u = -Kx</strong>.
+              </p>
+              <div class="project-tags">
+                <span class="chip">LQR Control Theory</span>
+                <span class="chip">Riccati Solver</span>
+                <span class="chip">3 Height Modes</span>
+                <span class="chip">Articulated Knee Servos</span>
+                <span class="chip">Inverted Pendulum</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn-inspect" data-modal="modalBalance">
+                  <span>View My Lab Telemetry & Specs</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 17l9.2-9.2M17 17V7H7" stroke-width="2"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Call to action to test in simulator -->
+        <div style="margin-top: 4rem; padding: 2.5rem; background: var(--bg-surface); border: 1.5px solid var(--border-subtle); border-radius: 10px; display: flex; align-items: center; justify-content: space-between; gap: 2rem;">
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; color: var(--text-pure); margin-bottom: 0.4rem;">Want to test these algorithms live?</h3>
+            <p style="font-size: 1rem; color: var(--text-muted);">
+              I created a live kinematics and control lab right in your browser where you can drive my arm, command the swarm, and test my LQR balancing bot.
+            </p>
+          </div>
+          <a href="simulator.html" class="btn btn-primary" style="flex-shrink: 0;">
+            <span>Open Interactive Lab</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MINIMALIST FOOTER ==================== -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="f-brand">RENSTEIN</div>
+        <div class="f-sub">Sudhanshu Nirala — Roboticist & Control Systems Engineer</div>
+        <div class="f-copyright">&copy; <span id="currentYear">2026</span> Sudhanshu Nirala. All rights reserved.</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://www.youtube.com/@projectRenstein" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://github.com/Caparenstein" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/nirala-sudhanshu-/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:niralasudhanshu03@gmail.com">Email</a>
+        <button class="btn-top" id="backToTopBtn" aria-label="Back to top">
+          <span>Top</span> ↑
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Telemetry Spec Modals -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div>
+          <span class="mh-tag" id="modalTag">SPECIFICATION ARCHIVE</span>
+          <h3 class="mh-title" id="modalTitle">PROTOTYPE DETAILS</h3>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Modal">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary-sm" id="modalDismissBtn">Close Specification</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

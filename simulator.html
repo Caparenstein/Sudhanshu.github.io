@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Robotics Lab — Sudhanshu Nirala (RENSTEIN)</title>
+  <meta name="description" content="Live in-browser kinematics and control theory simulator by Sudhanshu Nirala: 5-DOF Arm, Camera Turret PID, 4-Robot Swarm, and Variable-Height LQR Balance Bot.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="minimal-theme">
+
+  <!-- ==================== MAIN NAVIGATION BAR ==================== -->
+  <header class="main-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-accent">RENSTEIN</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-sub">SUDHANSHU NIRALA</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link">About Me</a>
+        <a href="projects.html" class="nav-link">My Projects</a>
+        <a href="simulator.html" class="nav-link active">Interactive Lab</a>
+        <a href="youtube.html" class="nav-link">YouTube & Builds</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="living-status-pill" title="Living website telemetry">
+          <span class="living-pulse-dot"></span>
+          <span>SIMULATOR://ONLINE</span>
+        </div>
+        <a href="contact.html" class="btn btn-primary-sm">
+          <span>Get in Touch</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ambient Light Reactive Canvas -->
+  <div class="background-canvas-wrapper">
+    <canvas id="neuralCanvas"></canvas>
+    <div class="bg-subtle-grid"></div>
+  </div>
+
+  <main>
+    <!-- ==================== DEDICATED PAGE HERO ==================== -->
+    <header class="page-hero">
+      <div class="page-hero-container">
+        <div class="page-kicker">
+          <span>DEDICATED PAGE // 03</span>
+          <span>•</span>
+          <span>EMBEDDED CODE SIMULATOR</span>
+        </div>
+        <h1 class="page-title">Interactive Robotics Lab</h1>
+        <p class="page-desc">
+          I built this simulator so you can test the kinematics models and mathematical control algorithms behind my robots directly in your browser. Switch between my 5-DOF arm, active vision turret, 4-robot swarm, and variable-height self-balancing bot below.
+        </p>
+      </div>
+    </header>
+
+    <!-- ==================== SIMULATOR WORKSPACE ==================== -->
+    <section class="section" style="padding-top: 3rem;">
+      <div class="container">
+        <!-- Simulator Mode Selector Tabs -->
+        <div class="sim-tabs-bar">
+          <button class="sim-tab-btn active" data-sim="arm5dof">
+            <span class="stb-icon">🦾</span>
+            <span>My 5-DOF Arm + Gripper</span>
+          </button>
+          <button class="sim-tab-btn" data-sim="turret">
+            <span class="stb-icon">🎯</span>
+            <span>My Camera Turret (PID)</span>
+          </button>
+          <button class="sim-tab-btn" data-sim="swarm">
+            <span class="stb-icon">🐝</span>
+            <span>My 4-Robot Swarm</span>
+          </button>
+          <button class="sim-tab-btn" data-sim="balance">
+            <span class="stb-icon">⚖️</span>
+            <span>My Balance Bot (LQR)</span>
+          </button>
+        </div>
+
+        <div class="lab-workspace">
+          <!-- Canvas Viewport -->
+          <div class="lab-canvas-panel">
+            <div class="lab-panel-header">
+              <span class="lph-title" id="simTitleBadge">SIM://5_DOF_ROBOTIC_ARM_MANIPULATOR</span>
+              <span class="lph-state" id="simStateBadge">ALGO: PID + ADRC + FUZZY LOGIC</span>
+            </div>
+
+            <div class="canvas-box">
+              <canvas id="kinematicsCanvas" width="600" height="420"></canvas>
+              <div class="canvas-help-tip" id="canvasHelpTip">
+                <span>⚡ Move cursor to test forward & inverse kinematics on my 5-DOF arm</span>
+              </div>
+            </div>
+
+            <!-- Joint Telemetry Readout -->
+            <div class="lab-joint-telemetry" id="jointTelemetryPanel">
+              <div class="joint-metric">
+                <span class="jm-label">θ1 (Base Yaw):</span>
+                <span class="jm-value" id="theta1Val">15.0°</span>
+                <div class="jm-bar"><div class="jm-fill" id="theta1Bar" style="width: 50%;"></div></div>
+              </div>
+              <div class="joint-metric">
+                <span class="jm-label">θ2 (Shoulder):</span>
+                <span class="jm-value" id="theta2Val">45.2°</span>
+                <div class="jm-bar"><div class="jm-fill" id="theta2Bar" style="width: 60%;"></div></div>
+              </div>
+              <div class="joint-metric">
+                <span class="jm-label">θ3 (Elbow):</span>
+                <span class="jm-value" id="theta3Val">-32.4°</span>
+                <div class="jm-bar"><div class="jm-fill" id="theta3Bar" style="width: 40%;"></div></div>
+              </div>
+              <div class="joint-metric">
+                <span class="jm-label">End-Effector:</span>
+                <span class="jm-value" id="gripperVal">Grip: 85%</span>
+                <div class="jm-bar"><div class="jm-fill" id="gripperBar" style="width: 85%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls & Diagnostic Terminal -->
+          <div class="lab-console-panel">
+            <div class="lab-panel-header">
+              <span class="lph-title">MY CONTROL THEORY DIAGNOSTICS</span>
+              <span class="lph-state" id="consoleModeStatus">ACTIVE: 5-DOF PID/ADRC</span>
+            </div>
+
+            <!-- Diagnostic Trigger Buttons -->
+            <div class="diag-action-buttons">
+              <button class="btn-diag" id="btnTestArmAdrc">
+                <span class="diag-icon">⚡</span>
+                <span class="diag-btn-text">Test My ADRC Observer (ESO)</span>
+              </button>
+              <button class="btn-diag" id="btnTestFuzzy">
+                <span class="diag-icon">🎛️</span>
+                <span class="diag-btn-text">Run Fuzzy Gain Scheduler</span>
+              </button>
+              <button class="btn-diag" id="btnTestSwarmSync">
+                <span class="diag-icon">📡</span>
+                <span class="diag-btn-text">Sync 4-Robot Swarm Mesh</span>
+              </button>
+              <button class="btn-diag" id="btnTestLqrBalance">
+                <span class="diag-icon">⚖️</span>
+                <span class="diag-btn-text">Solve LQR Riccati Equation</span>
+              </button>
+            </div>
+
+            <!-- Live Terminal Readout -->
+            <div class="terminal-screen" id="terminalScreen">
+              <div class="term-line info">[INIT] Sudhanshu Nirala Core Robotics Stack Ready</div>
+              <div class="term-line success">[ARM-5DOF] Base Yaw, Shoulder, Elbow, Wrist Pitch, Wrist Twist online</div>
+              <div class="term-line success">[ADRC] Extended State Observer estimating total disturbance f(x,t)</div>
+              <div class="term-line info">[TURRET] Camera Turret PID tuned: Kp=2.8, Ki=0.04, Kd=1.2</div>
+              <div class="term-line warning">[SWARM] 4-Agent consensus matrix online. Click anywhere to converge!</div>
+              <div class="term-line prompt">> Ready for control loop diagnostics...</div>
+            </div>
+
+            <!-- Parameter Tuning Sliders & 3 Height Buttons -->
+            <div class="telemetry-controls-box">
+              <div class="control-row">
+                <label for="kpSlider">PROPORTIONAL GAIN (Kp): <span id="kpVal">240.0</span></label>
+                <input type="range" id="kpSlider" min="50" max="500" value="240">
+              </div>
+              <div class="control-row">
+                <label for="kdSlider">DERIVATIVE DAMPING (Kd): <span id="kdVal">18.5</span></label>
+                <input type="range" id="kdSlider" min="1" max="50" value="18.5" step="0.5">
+              </div>
+
+              <!-- 3 Posture Buttons for Balance Bot -->
+              <div class="control-row-height-presets" id="heightControlRow">
+                <div class="height-preset-header">
+                  <span class="hph-label">MY BOT HEIGHT (SERVO KNEE JOINTS):</span>
+                  <span class="hph-status" id="heightVal">100% (STAND TALL // LQR)</span>
+                </div>
+                <div class="height-buttons-trio">
+                  <button type="button" class="btn-height-step" id="btnHeightCrouch" data-height="0.35">
+                    <span class="bhs-icon">🦿</span>
+                    <span class="bhs-text">Low Crouch</span>
+                    <span class="bhs-sub">35% • Knee Bent</span>
+                  </button>
+                  <button type="button" class="btn-height-step" id="btnHeightMid" data-height="0.65">
+                    <span class="bhs-icon">⚡</span>
+                    <span class="bhs-text">Mid Stance</span>
+                    <span class="bhs-sub">65% • Nominal</span>
+                  </button>
+                  <button type="button" class="btn-height-step active" id="btnHeightTall" data-height="1.0">
+                    <span class="bhs-icon">🦾</span>
+                    <span class="bhs-text">Stand Tall</span>
+                    <span class="bhs-sub">100% • Extended</span>
+                  </button>
+                </div>
+                <input type="range" id="heightSlider" min="30" max="100" value="100" step="5" style="display: none;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MINIMALIST FOOTER ==================== -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="f-brand">RENSTEIN</div>
+        <div class="f-sub">Sudhanshu Nirala — Roboticist & Control Systems Engineer</div>
+        <div class="f-copyright">&copy; <span id="currentYear">2026</span> Sudhanshu Nirala. All rights reserved.</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://www.youtube.com/@projectRenstein" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://github.com/Caparenstein" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/nirala-sudhanshu-/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:niralasudhanshu03@gmail.com">Email</a>
+        <button class="btn-top" id="backToTopBtn" aria-label="Back to top">
+          <span>Top</span> ↑
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

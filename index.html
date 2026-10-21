@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sudhanshu Nirala (RENSTEIN) — Roboticist & Control Systems Engineer</title>
+  <meta name="description" content="Personal portfolio of Sudhanshu Nirala (RENSTEIN). 5-DOF robotic manipulators, active vision turrets, 4-robot collaborative swarms, and variable-height LQR self-balancing bots.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="minimal-theme">
+
+  <!-- ==================== MAIN NAVIGATION BAR ==================== -->
+  <header class="main-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-accent">RENSTEIN</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-sub">SUDHANSHU NIRALA</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link active">About Me</a>
+        <a href="projects.html" class="nav-link">My Projects</a>
+        <a href="simulator.html" class="nav-link">Interactive Lab</a>
+        <a href="youtube.html" class="nav-link">YouTube & Builds</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="living-status-pill" title="Living website telemetry">
+          <span class="living-pulse-dot"></span>
+          <span>CORE://ONLINE</span>
+        </div>
+        <a href="contact.html" class="btn btn-primary-sm">
+          <span>Get in Touch</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ambient Light Reactive Canvas -->
+  <div class="background-canvas-wrapper">
+    <canvas id="neuralCanvas"></canvas>
+    <div class="bg-subtle-grid"></div>
+  </div>
+
+  <main>
+    <!-- ==================== HERO SECTION (FIRST PERSON) ==================== -->
+    <section class="section hero-section" id="hero">
+      <div class="hero-container">
+        <div class="hero-grid">
+          <!-- Left Column: My Story & Ambition -->
+          <div class="hero-left-col">
+            <div class="hero-kicker">
+              <span class="kicker-dot"></span>
+              <span class="kicker-text">ROBOTICIST & MECHATRONICS CREATOR</span>
+            </div>
+
+            <h1 class="hero-title">
+              <span class="hero-title-name">Sudhanshu Nirala</span>
+              <span class="hero-title-alias">RENSTEIN</span>
+            </h1>
+
+            <p class="hero-bio">
+              Hi, I'm <strong>Sudhanshu Nirala</strong>. My dream is to become the <strong>Greatest Roboticist</strong>. I design and build real physical machines — from precision 5-DOF manipulators and active vision turrets to 4-robot collaborative swarms and variable-height dynamic balance robots governed by modern control theory.
+            </p>
+
+            <!-- Focus Badges -->
+            <div class="hero-tags-row">
+              <span class="spec-tag">5-DOF Arm: PID • ADRC • Fuzzy</span>
+              <span class="spec-tag">Face-Tracking Turret (PID)</span>
+              <span class="spec-tag">4-Robot Collaborative Swarm</span>
+              <span class="spec-tag">Variable-Height Balance Bot (LQR)</span>
+            </div>
+
+            <!-- Action Portals -->
+            <div class="hero-cta-group">
+              <a href="projects.html" class="btn btn-primary">
+                <span>Explore My Projects</span>
+                <span class="btn-arrow">→</span>
+              </a>
+              <a href="simulator.html" class="btn btn-secondary">
+                <span class="btn-icon">⚙️</span>
+                <span>Test My Controls in Lab</span>
+              </a>
+              <a href="youtube.html" class="btn btn-outline">
+                <span class="btn-icon">▶</span>
+                <span>Watch on YouTube</span>
+              </a>
+            </div>
+
+            <!-- Key Engineering Metrics -->
+            <div class="hero-metrics-strip">
+              <div class="metric-item">
+                <span class="metric-val">5 DOF</span>
+                <span class="metric-lbl">Kinematic Chain + Gripper</span>
+              </div>
+              <div class="metric-sep">/</div>
+              <div class="metric-item">
+                <span class="metric-val">ADRC ESO</span>
+                <span class="metric-lbl">Active Disturbance Rejection</span>
+              </div>
+              <div class="metric-sep">/</div>
+              <div class="metric-item">
+                <span class="metric-val">4 Robots</span>
+                <span class="metric-lbl">Collaborative Swarm Mesh</span>
+              </div>
+              <div class="metric-sep">/</div>
+              <div class="metric-item">
+                <span class="metric-val">LQR Optimal</span>
+                <span class="metric-lbl">3-Posture Wheeled Balance</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: My Portrait with 3D Tilt -->
+          <div class="hero-right-col">
+            <div class="portrait-card" id="mechaFrame">
+              <div class="portrait-image-wrapper">
+                <img src="renstein_portrait.jpg" alt="Sudhanshu Nirala - Roboticist" class="portrait-img" id="heroMechaImg">
+                <div class="portrait-caption-center">
+                  <div class="portrait-name">Sudhanshu Nirala</div>
+                  <div class="portrait-role">Roboticist</div>
+                </div>
+              </div>
+              <div class="portrait-meta-bar">
+                <span class="pm-status">● AUTONOMOUS MECHATRONICS LAB</span>
+                <span class="pm-spec">YOUTUBE: @projectRenstein</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MY CORE PHILOSOPHY & AMBITION ==================== -->
+    <section class="section about-section" id="about">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-tag">MY CREED & AMBITION</span>
+          <h2 class="section-title">Why I Build Robots</h2>
+          <p class="section-desc">
+            To me, robotics isn't just software running in simulation. It's the physical convergence of mechanical design, power electronics, embedded firmware, and rigorous mathematical control theory.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <!-- My Personal Manifesto -->
+          <div class="creed-card">
+            <h3 class="creed-title">Mastering the Physical Machine</h3>
+            <p>
+              I believe that real engineering mastery starts where the theory meets real-world non-linearities. When motors heat up, when joints flex under load, when sensors deliver noisy data, and when unmodeled friction threatens stability.
+            </p>
+            <p>
+              That is why I derived Denavit-Hartenberg matrices for my 5-DOF arm, why I tuned discrete PID loops with anti-windup clamping on my optical turret, why I formulated Artificial Potential Fields for my 4-robot swarm, and why I solve the Algebraic Riccati Equation to keep my variable-height robot balanced.
+            </p>
+            <p>
+              Every robot I build takes me one step closer to my dream of being the <strong>Greatest Roboticist</strong>.
+            </p>
+            <blockquote class="creed-quote">
+              "True engineering begins when the mathematical model balances seamlessly in physical reality despite friction, noise, and chaos."
+              <cite>— Sudhanshu Nirala (RENSTEIN)</cite>
+            </blockquote>
+          </div>
+
+          <!-- 4 Pillars of My Work -->
+          <div class="pillars-grid">
+            <div class="pillar-box">
+              <div class="pillar-num">01</div>
+              <h4 class="pillar-title">Kinematics & Manipulation</h4>
+              <p class="pillar-text">
+                I engineered my 5-DOF arm with Base Yaw, Shoulder, Elbow, Wrist Pitch, Wrist Twist, and active gripping, controlled with PID, ADRC, and Fuzzy Logic.
+              </p>
+              <a href="projects.html" style="color: var(--orange-core); font-weight: 700; font-size: 0.85rem; text-decoration: none;">View details →</a>
+            </div>
+
+            <div class="pillar-box">
+              <div class="pillar-num">02</div>
+              <h4 class="pillar-title">Active Optical Targeting</h4>
+              <p class="pillar-text">
+                I built a 2-axis Pan-Tilt gimbal with computer vision tracking and tuned discrete PID to lock onto faces and cursor coordinates smoothly with zero overshoot.
+              </p>
+              <a href="projects.html" style="color: var(--orange-core); font-weight: 700; font-size: 0.85rem; text-decoration: none;">View details →</a>
+            </div>
+
+            <div class="pillar-box">
+              <div class="pillar-num">03</div>
+              <h4 class="pillar-title">Collective Swarm Autonomy</h4>
+              <p class="pillar-text">
+                I designed a 4-robot collaborative swarm running decentralized consensus algorithms and Artificial Potential Fields for dynamic formation and collision avoidance.
+              </p>
+              <a href="projects.html" style="color: var(--orange-core); font-weight: 700; font-size: 0.85rem; text-decoration: none;">View details →</a>
+            </div>
+
+            <div class="pillar-box">
+              <div class="pillar-num">04</div>
+              <h4 class="pillar-title">Dynamic Variable-Height Balance</h4>
+              <p class="pillar-text">
+                I built a two-wheeled inverted pendulum with servo knee linkages that bend across 3 height postures while my LQR controller keeps it standing straight upright.
+              </p>
+              <a href="projects.html" style="color: var(--orange-core); font-weight: 700; font-size: 0.85rem; text-decoration: none;">View details →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DEDICATED SECTION PORTALS ==================== -->
+    <section class="section" style="padding-top: 1rem; padding-bottom: 5rem;">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-tag">DEDICATED TOPICS</span>
+          <h2 class="section-title">Explore My Work In-Depth</h2>
+          <p class="section-desc">
+            Visit dedicated pages to inspect my schematics, test my control algorithms in a live simulator, or watch my latest YouTube build experiments.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+          <!-- Portal 1: Projects -->
+          <div class="pillar-box" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span style="font-size: 2rem; display: block; margin-bottom: 0.75rem;">🦾</span>
+              <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-pure);">My Hardware Projects</h3>
+              <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.5rem;">
+                Full technical breakdowns, vector CAD schematics, actuator dimensions, and control loop derivations for my 4 flagship robotics systems.
+              </p>
+            </div>
+            <a href="projects.html" class="btn btn-secondary" style="width: 100%;">
+              <span>Open My Projects</span>
+              <span>→</span>
+            </a>
+          </div>
+
+          <!-- Portal 2: Simulator -->
+          <div class="pillar-box" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span style="font-size: 2rem; display: block; margin-bottom: 0.75rem;">⚙️</span>
+              <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-pure);">Interactive Lab Simulator</h3>
+              <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.5rem;">
+                Drive my 5-DOF arm, calibrate the camera turret, click to command my 4-robot swarm, and test the 3 postures of my LQR balancing bot live in your browser.
+              </p>
+            </div>
+            <a href="simulator.html" class="btn btn-secondary" style="width: 100%;">
+              <span>Open Interactive Lab</span>
+              <span>→</span>
+            </a>
+          </div>
+
+          <!-- Portal 3: YouTube -->
+          <div class="pillar-box" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span style="font-size: 2rem; display: block; margin-bottom: 0.75rem;">▶️</span>
+              <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-pure);">YouTube & Build Logs</h3>
+              <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1.5rem;">
+                Watch me test prototypes, tune control loops, break mechanisms, and document crazy new robotics experiments on my channel @projectRenstein.
+              </p>
+            </div>
+            <a href="youtube.html" class="btn btn-secondary" style="width: 100%;">
+              <span>Open YouTube Hub</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MY ENGINEERING ARSENAL ==================== -->
+    <section class="section arsenal-section" id="arsenal">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-tag">MY TECHNICAL TOOLKIT</span>
+          <h2 class="section-title">Control Theory & Engineering Arsenal</h2>
+          <p class="section-desc">
+            The core mathematical, algorithmic, and mechatronic competencies I apply every day when building autonomous machines.
+          </p>
+        </div>
+
+        <div class="arsenal-grid">
+          <div class="arsenal-card">
+            <div class="ac-header">
+              <span class="ac-icon">📐</span>
+              <h3 class="ac-title">Control Theory & Observers</h3>
+            </div>
+            <p class="ac-desc">I formulate controllers that reject disturbances, payload shifts, and dynamic uncertainties in real time.</p>
+            <ul class="ac-list">
+              <li>Classical PID & Anti-Windup Clamping</li>
+              <li>ADRC (Active Disturbance Rejection Control)</li>
+              <li>Extended State Observers (ESO)</li>
+              <li>Fuzzy Logic Adaptive Gain Scheduling</li>
+              <li>LQR (Linear Quadratic Regulator) State-Space</li>
+            </ul>
+          </div>
+
+          <div class="arsenal-card">
+            <div class="ac-header">
+              <span class="ac-icon">🦾</span>
+              <h3 class="ac-title">Kinematics & Multi-DOF Systems</h3>
+            </div>
+            <p class="ac-desc">I derive analytical equations and solve numerical inverse kinematics for multi-joint serial manipulators.</p>
+            <ul class="ac-list">
+              <li>Denavit-Hartenberg (DH) Convention</li>
+              <li>Forward & Inverse Kinematics (FABRIK / DLS)</li>
+              <li>Jacobian Matrices & Singularity Decoupling</li>
+              <li>Articulated Servo Knee Linkages</li>
+              <li>Parallel & Tendon-Driven Grippers</li>
+            </ul>
+          </div>
+
+          <div class="arsenal-card">
+            <div class="ac-header">
+              <span class="ac-icon">👁️</span>
+              <h3 class="ac-title">Swarm Robotics & Active Vision</h3>
+            </div>
+            <p class="ac-desc">I build multi-robot consensus mesh networks and high-speed optical tracking gimbal mechanisms.</p>
+            <ul class="ac-list">
+              <li>4-Agent Swarm Consensus Protocols</li>
+              <li>Artificial Potential Fields (APF)</li>
+              <li>Decentralized Formation & Collision Avoidance</li>
+              <li>Real-Time Face Landmark Detection</li>
+              <li>Pan-Tilt Optical Axis Closed-Loop Servos</li>
+            </ul>
+          </div>
+
+          <div class="arsenal-card">
+            <div class="ac-header">
+              <span class="ac-icon">⚡</span>
+              <h3 class="ac-title">Embedded Systems & Hardware</h3>
+            </div>
+            <p class="ac-desc">I write low-level real-time firmware, design power buses, and fuse multi-axis sensor streams.</p>
+            <ul class="ac-list">
+              <li>ROS 2 (Robot Operating System) & Micro-ROS</li>
+              <li>Two-Wheeled Inverted Pendulum Dynamics</li>
+              <li>IMU 6-Axis Sensor Fusion (Kalman Filter)</li>
+              <li>Microcontrollers (STM32, ESP32, Teensy)</li>
+              <li>High-Torque Servos, Motor Drivers & Encoders</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MY ROADMAP TIMELINE ==================== -->
+    <section class="section milestones-section" id="milestones">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-tag">MY ENGINEERING TRAJECTORY</span>
+          <h2 class="section-title">The Roadmap to the Greatest Roboticist</h2>
+          <p class="section-desc">
+            A milestone journey of designing custom hardware, tuning mathematical control loops, and pushing physical autonomy forward.
+          </p>
+        </div>
+
+        <div class="timeline-wrapper">
+          <div class="timeline-line"></div>
+
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-phase">PHASE 01 // MANIPULATION</div>
+              <h3 class="tl-title">Built My 5-DOF Robotic Arm with ADRC & Fuzzy Control</h3>
+              <p class="tl-desc">
+                I designed, 3D-modeled, wired, and calibrated the complete 5-DOF arm: Base Yaw, Shoulder, Elbow, Wrist Pitch, Wrist Twist, and Gripper. I derived the DH parameters and wrote my own ADRC Extended State Observer to reject payload disturbances.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-phase">PHASE 02 // COMPUTER VISION</div>
+              <h3 class="tl-title">Built My Closed-Loop Face-Tracking Camera Turret</h3>
+              <p class="tl-desc">
+                I constructed a 2-axis Pan-Tilt gimbal with computer-vision bounding-box tracking. I formulated discrete PID control with anti-windup clamping to eliminate tracking jitter and servo overshoot.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-phase">PHASE 03 // MULTI-AGENT AUTONOMY</div>
+              <h3 class="tl-title">Engineered My 4-Robot Collaborative Swarm</h3>
+              <p class="tl-desc">
+                I implemented a 4-robot decentralized collaborative swarm. I wrote Artificial Potential Field algorithms for dynamic multi-agent formation navigation and obstacle avoidance.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-phase">PHASE 04 // DYNAMIC BALANCE</div>
+              <h3 class="tl-title">Engineered My Variable-Height Self-Balancing Bot (LQR)</h3>
+              <p class="tl-desc">
+                I designed the wheeled-legged inverted pendulum robot with articulated knee linkages. I applied LQR optimal state-feedback control across 3 height postures (Low Crouch, Mid Stance, Stand Tall) with active upright stability.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item highlight">
+            <div class="tl-dot pulse-dot"></div>
+            <div class="tl-card highlight-card">
+              <div class="tl-phase">PHASE 05 // THE ULTIMATE SUMMIT</div>
+              <h3 class="tl-title">Universal Physical Autonomy</h3>
+              <p class="tl-desc">
+                I am unifying manipulation, active perception, collective swarms, and dynamic balance into generalized embodied physical intelligence — fulfilling my lifelong dream to become the Greatest Roboticist.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MINIMALIST FOOTER ==================== -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="f-brand">RENSTEIN</div>
+        <div class="f-sub">Sudhanshu Nirala — Roboticist & Control Systems Engineer</div>
+        <div class="f-copyright">&copy; <span id="currentYear">2026</span> Sudhanshu Nirala. All rights reserved.</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://www.youtube.com/@projectRenstein" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://github.com/Caparenstein" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/nirala-sudhanshu-/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:niralasudhanshu03@gmail.com">Email</a>
+        <button class="btn-top" id="backToTopBtn" aria-label="Back to top">
+          <span>Top</span> ↑
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
